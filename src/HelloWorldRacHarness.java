@@ -36,7 +36,7 @@ public final class HelloWorldRacHarness {
   }
 
   private static int iterationsFromEnv() {
-    String raw = System.getenv("HELLO_RAC_RUNS");
+    /*@ nullable @*/ String raw = System.getenv("HELLO_RAC_RUNS");
     if (raw == null || raw.isEmpty()) {
       return 5;
     }

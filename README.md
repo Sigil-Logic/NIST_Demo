@@ -9,7 +9,15 @@ Files:
 Running with OpenJML runtime assertion checking (RAC):
 ```sh
 mkdir -p out
+# adjust PATH to your OpenJML install if needed
+export PATH="/usr/local/openjml-macos-14-21-0.18:$PATH"
+
 openjml -rac -d out src/HelloWorld.java src/HelloWorldRacHarness.java
-java -cp out HelloWorldRacHarness
+
+# use the OpenJML-provided JDK and module path so RAC runtime classes resolve
+/usr/local/openjml-macos-14-21-0.18/jdk/bin/java \
+  --module-path /usr/local/openjml-macos-14-21-0.18/jdk/modules \
+  -cp "out:/usr/local/openjml-macos-14-21-0.18/jmlruntime.jar" \
+  HelloWorldRacHarness
 ```
 Set `HELLO_RAC_RUNS` (e.g., `HELLO_RAC_RUNS=20`) to increase stochastic runs. RAC enforces the JML contracts during execution; the harness checks the observable output. When both pass, you have runtime evidence that the program emits exactly `"Hello, World\n"` and touches nothing beyond the provided `PrintStream`.
